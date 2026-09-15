@@ -80,3 +80,10 @@ test('full narrative highlights singular and plural matches without changing the
   assert.ok(narrativeHighlights(text, 'keebored').every(p => !p.match));
   assert.deepEqual(narrativeHighlights('Supplies: PAPER, paper.', 'paper').filter(p => p.match).map(p => p.text), ['PAPER', 'paper']);
 });
+
+test('hyphenated search terms do not highlight unrelated words from one-letter fragments', () => {
+  const text = 'Budget including headphones and adapters. Filament for 3-D Printer.';
+  const matches = narrativeHighlights(text, '3-d printer').filter(part => part.match).map(part => part.text);
+  assert.deepEqual(matches, ['3', 'Printer']);
+  assert.ok(['Budget', 'including', 'headphones', 'and', 'adapters'].every(word => !matches.includes(word)));
+});
