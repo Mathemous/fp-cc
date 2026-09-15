@@ -133,7 +133,7 @@ try {
     Copy-Item -LiteralPath (Join-Path $source $entry.path) -Destination $target -Force
     if([IO.Path]::GetDirectoryName($target) -eq $workspaceRoot -and [IO.Path]::GetExtension($target) -eq '.bat') {
      $launcher=Get-Content -LiteralPath $target -Raw
-     $launcher=$launcher.Replace('%~dp0scripts\project-tools.ps1','%~dp0FP_Aims\scripts\project-tools.ps1')
+     $launcher=$launcher.Replace('%~dp0scripts\project-tools.ps1','%~dp0FP_ES\scripts\project-tools.ps1')
      Set-Content -LiteralPath $target -Value $launcher -Encoding ascii
     }
    }

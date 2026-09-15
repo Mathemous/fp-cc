@@ -1933,7 +1933,7 @@ body {
 
 /* Separate the program heading, preview, and action with restrained blue accents. */
 .alternative-card.other-program-card {
-  background: #fff;
+  background: #deecf9;
   border: 1px solid #bdd3e7;
   padding: 0;
   overflow: hidden;
@@ -1961,5 +1961,5 @@ body {
   font-size: 14px;
   font-weight: 600;
 }
-.alternative-card.other-program-card > button:hover { background: #edf5fc; }
+.alternative-card.other-program-card > button:hover { background: #d3e5f5; }
 .alternative-card.other-program-card > button:focus-visible { outline: 3px solid #367dd1; outline-offset: -3px; }

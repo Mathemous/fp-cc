@@ -1,6 +1,6 @@
 # Updating from Knox County Schools ePlan
 
-Retrieval and validation are maintained in the separate local project at C:\Projects\FP-AIMS Updater. FP-AIMS contains only the published source files and application interface.
+Retrieval and validation are maintained in the separate local project at C:\Projects\FP-ES App\FP-ES Updater. FP-AIMS contains only the published source files and application interface.
 
 The downloader selects the requested fiscal year's highest approved Consolidated revision and retrieves all five program budgets through ePlan's public interface. It records the application name, application date, revision, approval status, source-check time, and every exported budget row.
 
