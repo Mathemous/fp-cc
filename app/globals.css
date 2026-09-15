@@ -1933,8 +1933,8 @@ body {
 
 /* Separate the program heading, preview, and action with restrained blue accents. */
 .alternative-card.other-program-card {
-  background: #f7fafc;
-  border: 1px solid #b8cee2;
+  background: #dcecf8;
+  border: 1px solid #9fc5e2;
   padding: 0;
   overflow: hidden;
   box-shadow: 0 3px 12px #10375f08;
@@ -1952,7 +1952,7 @@ body {
   text-wrap: wrap;
 }
 .alternative-card.other-program-card .match-preview-row { margin: 14px 18px; gap: 10px; }
-.alternative-card.other-program-card .match-preview-box { background: #e8edf2; border-color: #ccd4dc; color: #334e68; }
+.alternative-card.other-program-card .match-preview-box { background: #cbddea; border-color: #adc5d7; color: #294a66; }
 .alternative-card.other-program-card .match-preview-box li { color: #334e68; font-weight: 700; }
 .alternative-card-action {
   display: flex;
@@ -1966,5 +1966,5 @@ body {
   font-size: 14px;
   font-weight: 600;
 }
-.alternative-card.other-program-card:hover { background: #eaf3fa; border-color: #8eb5d5; box-shadow: 0 5px 16px #10375f14; }
+.alternative-card.other-program-card:hover { background: #d0e4f3; border-color: #79acd2; box-shadow: 0 5px 16px #10375f18; }
 .alternative-card.other-program-card:focus-visible { outline: 3px solid #367dd1; outline-offset: 2px; }
