@@ -88,3 +88,11 @@ test('hyphenated search terms do not highlight unrelated words from one-letter f
   assert.ok(['Budget', '537', 'including', 'headphones', 'and', 'adapters'].every(word => !matches.includes(word)));
   assert.deepEqual(narrativeHighlights('3D printers', '3-d printer').filter(part => part.match).map(part => part.text), ['3D', 'printers']);
 });
+
+test('a single digit never returns results or highlights', () => {
+  for (let digit = 0; digit <= 9; digit++) {
+    const query = String(digit);
+    assert.deepEqual(searchRecords(records, query), []);
+    assert.ok(narrativeHighlights(`Account ${digit} and 537`, query).every(part => !part.match));
+  }
+});
