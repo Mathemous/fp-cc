@@ -82,8 +82,9 @@ test('full narrative highlights singular and plural matches without changing the
 });
 
 test('hyphenated search terms do not highlight unrelated words from one-letter fragments', () => {
-  const text = 'Budget including headphones and adapters. Filament for 3-D Printer.';
+  const text = 'Budget 537 including headphones and adapters. Filament for 3-D Printer.';
   const matches = narrativeHighlights(text, '3-d printer').filter(part => part.match).map(part => part.text);
-  assert.deepEqual(matches, ['3', 'Printer']);
-  assert.ok(['Budget', 'including', 'headphones', 'and', 'adapters'].every(word => !matches.includes(word)));
+  assert.deepEqual(matches, ['3-D', 'Printer']);
+  assert.ok(['Budget', '537', 'including', 'headphones', 'and', 'adapters'].every(word => !matches.includes(word)));
+  assert.deepEqual(narrativeHighlights('3D printers', '3-d printer').filter(part => part.match).map(part => part.text), ['3D', 'printers']);
 });
