@@ -89,10 +89,25 @@ test('hyphenated search terms do not highlight unrelated words from one-letter f
   assert.deepEqual(narrativeHighlights('3D printers', '3-d printer').filter(part => part.match).map(part => part.text), ['3D', 'printers']);
 });
 
-test('a single digit never returns results or highlights', () => {
+test('a single character never returns results or highlights', () => {
   for (let digit = 0; digit <= 9; digit++) {
     const query = String(digit);
     assert.deepEqual(searchRecords(records, query), []);
     assert.ok(narrativeHighlights(`Account ${digit} and 537`, query).every(part => !part.match));
   }
+  for (const letter of 'abcdefghijklmnopqrstuvwxyz') {
+    assert.deepEqual(searchRecords(records, letter), []);
+    assert.deepEqual(searchRecords(records, letter.toUpperCase()), []);
+    assert.ok(narrativeHighlights(`Supplies and services beginning with ${letter}`, letter).every(part => !part.match));
+  }
+});
+
+test('3-D is searched and highlighted as the whole 3D concept', () => {
+  const fixture = [
+    { item: '3-D printer filament' },
+    { item: 'Room 3 supplies' },
+    { item: 'Development services' },
+  ];
+  assert.deepEqual(searchRecords(fixture, '3-d').map(record => record.item), ['3-D printer filament']);
+  assert.deepEqual(narrativeHighlights('Room 3 has 3-D printers and development services.', '3-d').filter(part => part.match).map(part => part.text), ['3-D']);
 });
