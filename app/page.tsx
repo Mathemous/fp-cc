@@ -478,8 +478,28 @@ export default function Home() {
                     <div className="alternative-grid">
                       {alternatives.map((p) => {
                         const grouped = groupMatches(p.rows);
+                        const viewProgramResults = () => {
+                          setProgram(p.id);
+                          setVisible(30);
+                          !appRef.current?.classList.contains('search-view') && resultsRef.current?.scrollIntoView({
+                            behavior: 'smooth',
+                          });
+                        };
                         return (
-                          <article key={p.id} className={`alternative-card ${p.id !== program ? 'other-program-card' : ''}`}>
+                          <article
+                            key={p.id}
+                            className={`alternative-card ${p.id !== program ? 'other-program-card' : ''}`}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`View ${p.name} results`}
+                            onClick={viewProgramResults}
+                            onKeyDown={(event) => {
+                              if (event.key === 'Enter' || event.key === ' ') {
+                                event.preventDefault();
+                                viewProgramResults();
+                              }
+                            }}
+                          >
                             <h3>{p.name}</h3>
                             <div className="match-preview-row">
                               <span className="match-preview-count">{grouped.length} {grouped.length === 1 ? 'match' : 'matches'}:</span>
@@ -488,17 +508,9 @@ export default function Home() {
                                 {grouped.length > 2 && <span className="match-preview-more">+{grouped.length - 2} more</span>}
                               </div>
                             </div>
-                            <button
-                              onClick={() => {
-                                setProgram(p.id);
-                                setVisible(30);
-                                !appRef.current?.classList.contains('search-view') && resultsRef.current?.scrollIntoView({
-                                  behavior: 'smooth',
-                                });
-                              }}
-                            >
+                            <div className="alternative-card-action" aria-hidden="true">
                               View program results <ArrowRight size={17} />
-                            </button>
+                            </div>
                           </article>
                         );
                       })}
