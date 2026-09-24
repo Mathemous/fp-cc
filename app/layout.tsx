@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Untitled site',
+  title: 'Chester County ePlan Search',
 };
 
 export default function RootLayout({
@@ -31,3 +31,4 @@ export default function RootLayout({
     </html>
   );
 }
+

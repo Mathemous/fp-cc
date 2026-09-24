@@ -1,5 +1,5 @@
 {
-  "name": "fp-aims",
+  "name": "fp-cc",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -55,3 +55,4 @@
   },
   "type": "module"
 }
+

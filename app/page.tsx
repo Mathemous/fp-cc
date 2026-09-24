@@ -35,7 +35,7 @@ function Brand({ compact = false }: { compact?: boolean }) {
         {compact ? <>Federal Programs <strong>ePlan Search</strong></> : <><span className="brand-name-line">Federal Programs</span><br /><strong>ePlan Search</strong></>}
       </span>
       <i />
-      <p>Approved Items, Materials &amp; Services</p>
+      <p>Federal Programs Items, Materials &amp; Services</p>
     </div>
   );
 }
@@ -322,11 +322,10 @@ export default function Home() {
       <main className="welcome">
         <div className="welcome-glow" />
         <div className="welcome-inner">
-          <img
-            className="kcs-watermark"
-            src="/kcs-logo.jpg"
-            alt="Knox County Schools"
-          />
+          <div className="kcs-watermark cc-watermark" aria-hidden="true">
+            FP<br />
+            <strong>CC</strong>
+          </div>
           <div className="welcome-brand">
             <Brand />
             <p className="federal-label">Federal Programs</p>
@@ -347,7 +346,7 @@ export default function Home() {
                 setQuery(null);
               }}
             >
-              Enter Federal Programs ePlan Search <ArrowRight size={22} />
+              Enter Chester County ePlan Search <ArrowRight size={22} />
             </a>
           </section>
         </div>
@@ -363,7 +362,7 @@ export default function Home() {
           <a
             href="#"
             className="brand-link"
-            aria-label="Federal Programs ePlan Search home"
+            aria-label="Chester County ePlan Search home"
             onClick={() => setEntered(false)}
           >
             <Brand compact />
@@ -525,3 +524,4 @@ export default function Home() {
     </div>
   );
 }
+

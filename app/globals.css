@@ -142,6 +142,18 @@ h3 {
   margin: 0 auto 22px;
   display: block;
 }
+.cc-watermark {
+  object-fit: initial;
+  mix-blend-mode: screen;
+  font-size: 45px;
+  font-weight: 350;
+  line-height: 0.92;
+  letter-spacing: 0;
+}
+.cc-watermark strong {
+  font-size: 52px;
+  font-weight: 800;
+}
 .brand > span {
   font-weight: 350;
   font-size: clamp(48px, 8vw, 76px);

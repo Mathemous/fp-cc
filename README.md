@@ -1,4 +1,4 @@
-# FP AIMS
+# FP CC
 
 Federal Programs Approved Items, Materials & Services. A free, public, mobile-friendly reference directory built with React and Vite. No login, server, database, paid API, or environment variables are required.
 
@@ -48,15 +48,17 @@ Welcome and search screens use a URL hash so they work on ordinary static hostin
 
 ## Windows launchers
 
-Double-click the batch files in the parent FP-ES App folder. All application files, dependencies, scripts, and Git history live in FP_ES underneath it. Backups remain in the parent Backups folder. The launchers use relative paths, so this entire parent folder can be moved together.
+Double-click the batch files in the parent FP-CC folder. All application files, dependencies, scripts, and Git history live in fp-cc underneath it. Backups remain in the parent Backups folder. The launchers use relative paths, so this entire parent folder can be moved together.
 
 - **Push.bat**: tests and builds, commits local changes if needed, then pushes main. Vercel publishes new app changes automatically. Stops if a step fails; never force-pushes.
 - **Git Pull.bat**: requires a clean working tree, pulls fast-forward only, then installs locked dependencies.
-- **Create Backup.bat**: creates `Backups/FP-AIMS_timestamp`, verifies source files with SHA256, and includes a verified Git-history bundle. Only completed backups get a completion marker. Dependencies, builds, caches and earlier backups are excluded. Backups stay out of GitHub.
+- **Create Backup.bat**: creates `Backups/FP-CC_timestamp`, verifies source files with SHA256, and includes a verified Git-history bundle. Only completed backups get a completion marker. Dependencies, builds, caches and earlier backups are excluded. Backups stay out of GitHub.
 - **Restore Latest Backup.bat**: verifies the newest completed backup, requests RESTORE confirmation and creates a safety backup before replacing source files. Preserves Git metadata and local environment files. Newer extra files are not deleted. Reinstalls dependencies and checks the build. Does not automatically push. Add `-DryRun` to verify without restoring.
 - **1 - Start Vite.bat**: opens the local app on port 5180. Keep the window open; Ctrl+C stops it. An occupied port causes an error instead of opening another project's app.
 - **Check Build.bat**: runs tests and the production build without publishing.
 - **Tree Generator.bat**: generates `Tree.md`, excluding dependencies, history and backup folders.
 - **Open Live App.bat**: opens the public Vercel app.
 
-For unattended use, add `-NoPause` to any launcher. The shared implementation lives in `FP_ES/scripts/project-tools.ps1`. Backups include both app source and the parent launchers. Existing flat backups restore launcher files to the parent and app files to the child. Restoring uses a file overlay, not a destructive directory mirror; Git history is available in each backup's `history.bundle` for advanced recovery.
+For unattended use, add `-NoPause` to any launcher. The shared implementation lives in `fp-cc/scripts/project-tools.ps1`. Backups include both app source and the parent launchers. Existing flat backups restore launcher files to the parent and app files to the child. Restoring uses a file overlay, not a destructive directory mirror; Git history is available in each backup's `history.bundle` for advanced recovery.
+
+

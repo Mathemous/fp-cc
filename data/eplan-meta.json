@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "district": "Knox County Schools",
-  "districtCode": "470",
+  "district": "Chester County Schools",
+  "districtCode": "120",
   "year": 2027,
   "application": "Consolidated",
   "applicationDate": "7/29/2026",
@@ -41,3 +41,4 @@
     "title-4": 192
   }
 }
+

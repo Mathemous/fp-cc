@@ -42,10 +42,10 @@ function Assert-Child {
  return $resolved
 }
 function New-VerifiedBackup {
- $destination=Assert-Child -Path (Join-Path $backupRoot ('FP-AIMS_'+(Get-Date -Format 'yyyy-MM-dd_HHmmss_fff'))) -Parent $backupRoot
+ $destination=Assert-Child -Path (Join-Path $backupRoot ('FP-CC_'+(Get-Date -Format 'yyyy-MM-dd_HHmmss_fff'))) -Parent $backupRoot
  if(Test-Path -LiteralPath $destination){throw 'A backup already exists with this timestamp.'}
  New-Item -ItemType Directory -Path $destination -Force | Out-Null
- Write-Host "Backing up FP AIMS to $destination"
+ Write-Host "Backing up FP CC to $destination"
  $files=@(Get-ProjectFiles -Folder $projectRoot)+@(Get-ChildItem -LiteralPath $workspaceRoot -Filter '*.bat' -File)
  $manifest=@()
  foreach($file in $files){
@@ -63,7 +63,7 @@ function New-VerifiedBackup {
  Run-Git -GitArgs @('bundle','verify',$bundle)
  $commit=(& git -C $projectRoot rev-parse HEAD)
  if($LASTEXITCODE -ne 0){throw 'Could not read current commit.'}
- @{created=(Get-Date -Format o);project='FP-AIMS';commit=$commit;files=$manifest;bundleSha256=(Get-Checksum -FilePath $bundle)} | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $destination 'backup-manifest.json') -Encoding UTF8
+ @{created=(Get-Date -Format o);project='FP-CC';commit=$commit;files=$manifest;bundleSha256=(Get-Checksum -FilePath $bundle)} | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $destination 'backup-manifest.json') -Encoding UTF8
  'COMPLETE - source files SHA256 verified; Git history bundle verified.' | Set-Content -LiteralPath (Join-Path $destination 'BACKUP_COMPLETE.txt')
  Write-Host "Backup verified: $($files.Count) files plus Git history."
  return $destination
@@ -79,8 +79,8 @@ function Get-RestoreTarget {
 $exitCode=0
 Push-Location -LiteralPath $projectRoot
 try {
- if(-not(Test-Path -LiteralPath (Join-Path $projectRoot 'package.json'))){throw 'FP AIMS package.json is missing.'}
- Write-Host "`nFP AIMS - $Action`n$projectRoot`n"
+ if(-not(Test-Path -LiteralPath (Join-Path $projectRoot 'package.json'))){throw 'FP CC package.json is missing.'}
+ Write-Host "`nFP CC - $Action`n$projectRoot`n"
  switch($Action){
   'Push' {
    $branch=(& git branch --show-current)
@@ -91,7 +91,7 @@ try {
    if($LASTEXITCODE -ne 0){throw 'Could not inspect Git changes.'}
    if($changes){
     Run-Git -GitArgs @('add','--all')
-    Run-Git -GitArgs @('-c','gc.auto=0','commit','-m',('Update FP AIMS '+(Get-Date -Format 'yyyy-MM-dd HH:mm')))
+    Run-Git -GitArgs @('-c','gc.auto=0','commit','-m',('Update FP CC '+(Get-Date -Format 'yyyy-MM-dd HH:mm')))
    }
    Run-Git -GitArgs @('push','origin','main')
    Write-Host 'Pushed. Vercel will publish any new app changes automatically.'
@@ -106,11 +106,11 @@ try {
   }
   'Backup' { $null=New-VerifiedBackup }
   'Restore' {
-   $latest=Get-ChildItem -LiteralPath $backupRoot -Directory | Where-Object {$_.Name -match '^FP-AIMS_\d{4}-\d{2}-\d{2}_\d{6}_\d{3}$' -and (Test-Path -LiteralPath (Join-Path $_.FullName 'BACKUP_COMPLETE.txt'))} | Sort-Object Name -Descending | Select-Object -First 1
+   $latest=Get-ChildItem -LiteralPath $backupRoot -Directory | Where-Object {$_.Name -match '^FP-CC_\d{4}-\d{2}-\d{2}_\d{6}_\d{3}$' -and (Test-Path -LiteralPath (Join-Path $_.FullName 'BACKUP_COMPLETE.txt'))} | Sort-Object Name -Descending | Select-Object -First 1
    if(-not $latest){throw 'No completed backups were found.'}
    $source=Assert-Child -Path $latest.FullName -Parent $backupRoot
    $manifest=Get-Content -LiteralPath (Join-Path $source 'backup-manifest.json') -Raw | ConvertFrom-Json
-   if($manifest.project -ne 'FP-AIMS'){throw 'This backup is not an FP AIMS backup.'}
+   if($manifest.project -ne 'FP-CC'){throw 'This backup is not an FP CC backup.'}
    foreach($entry in $manifest.files){
     $file=Assert-Child -Path (Join-Path $source $entry.path) -Parent $source
     $null=Get-RestoreTarget -RelativePath $entry.path
@@ -133,7 +133,7 @@ try {
     Copy-Item -LiteralPath (Join-Path $source $entry.path) -Destination $target -Force
     if([IO.Path]::GetDirectoryName($target) -eq $workspaceRoot -and [IO.Path]::GetExtension($target) -eq '.bat') {
      $launcher=Get-Content -LiteralPath $target -Raw
-     $launcher=$launcher.Replace('%~dp0scripts\project-tools.ps1','%~dp0FP_ES\scripts\project-tools.ps1')
+     $launcher=$launcher.Replace('%~dp0scripts\project-tools.ps1','%~dp0fp-cc\scripts\project-tools.ps1')
      Set-Content -LiteralPath $target -Value $launcher -Encoding ascii
     }
    }
@@ -151,12 +151,14 @@ try {
   'Build' { Run-Npm -NpmArgs @('test'); Run-Npm -NpmArgs @('run','build') }
   'Tree' {
    $lines=@(Get-ProjectFiles -Folder $projectRoot | ForEach-Object {$_.FullName.Substring($projectRoot.Length+1).Replace('\','/')} | Sort-Object)
-   @('# FP AIMS file tree','','```text','FP-Aims/',$lines,'```') | Set-Content -LiteralPath (Join-Path $projectRoot 'Tree.md') -Encoding UTF8
+   @('# FP CC file tree','','```text','FP-CC/',$lines,'```') | Set-Content -LiteralPath (Join-Path $projectRoot 'Tree.md') -Encoding UTF8
    Write-Host 'Updated Tree.md.'
   }
-  'Open' { Start-Process 'https://fp-aims.vercel.app/' }
+  'Open' { Start-Process 'https://fp-cc.vercel.app/' }
  }
 } catch { Write-Host "ERROR: $($_.Exception.Message)" -ForegroundColor Red; $exitCode=1 }
 finally { Pop-Location }
 if(-not $NoPause){Read-Host 'You can close this window' | Out-Null}
 exit $exitCode
+
+

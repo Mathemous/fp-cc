@@ -42,11 +42,11 @@ export default function Eplan({ program, query, onProgramChange, onQueryChange }
 
   return <div className="app database-view eplan-view">
     <header className="app-header"><div className="header-inner">
-      <a href="#" className="brand compact" aria-label="Federal Programs ePlan Search home"><span>Federal Programs <strong>ePlan Search</strong></span></a>
+      <a href="#" className="brand compact" aria-label="Chester County ePlan Search home"><span>Federal Programs <strong>ePlan Search</strong></span></a>
     </div></header>
     <main className="workspace eplan-workspace">
       <aside className="eplan-sidebar search-panel">
-        <div className="page-title"><h1>Knox County ePlan Budget<span>.</span></h1>
+        <div className="page-title"><h1>Chester County ePlan Budget<span>.</span></h1>
           <p>{source.district} ({source.districtCode}) · FY {source.year} · {source.application} ({source.applicationDate}) · Revision {source.revision}</p>
         </div>
         <div className="program-field">
@@ -109,3 +109,4 @@ export default function Eplan({ program, query, onProgramChange, onQueryChange }
     </main>
   </div>;
 }
+
