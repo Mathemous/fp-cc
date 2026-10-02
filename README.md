@@ -4,25 +4,20 @@ Federal Programs Approved Items, Materials & Services. A free, public, mobile-fr
 
 ## Use
 
-Enter from the welcome page, choose one of five programs, and search an item or service. Results automatically include matches in other programs. Expand Source details for account and line item context. Empty searches browse the selected program; long results load in batches of 30.
+Enter from the welcome page, choose a discovered Title I section, and search an item or service. Results automatically include matches in other Title I sections. Expand Source details for account and line item context. Empty searches browse the selected section; long results load in batches of 30.
 
 ## Data
 
-`data/records.json` contains 1,009 entries transcribed from the user's FY 2027 ePlan budget-narrative workbook, Revision 1:
+`data/records.json` contains 10 entries rebuilt from Chester County Schools' FY 2027 Consolidated ePlan Title I budget sections, Revision 4:
 
 | Program | Entries |
 | --- | ---: |
-| Title I, Part A | 463 |
-| Title I, Part A–Neglected | 53 |
-| Title I, Part D | 18 |
-| Title II, Part A | 283 |
-| Title IV | 192 |
+| Title I, Part A | 7 |
+| Title I, Part D LEA | 3 |
 
 Personnel and indirect cost entries are excluded. Entries retain account, category, narrative subcategory, item/service, and line item number. Inferred recipient and set-aside labels are excluded. Consult the full source narrative for locations, institutions, and restrictions. A match represents an entry in the source narrative, not a general determination of allowable spending. No-match means not found in this list, not legally prohibited.
 
-Some narratives in the source FY 2027 application retain FY 2026 wording; refer to the original ePlan application for full context. This is an independent public-information reference, not an official ePlan service. Branding background was requested by the creator. The KCS image source is the district's profile image at https://x.com/KnoxSchools (https://pbs.twimg.com/profile_images/1401988467496783875/5KpKm-dD_400x400.jpg).
-
-The CPR training mockup used illustrative data. The actual app accurately finds CPR training only in Title IV, for Grace Christian Academy.
+Refer to the original ePlan application for full context. This is an independent public-information reference, not an official ePlan service.
 
 ## Development
 

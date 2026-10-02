@@ -5,7 +5,6 @@ import { matchesEplanQuery } from '@/lib/eplan-search';
 
 const dollars = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 const displayProgramName = (id: string, name: string) => {
-  if (id === 'title-2-a') return 'Title II';
   if (id === 'title-1-d') return 'Title I, Part D';
   return name;
 };
@@ -52,7 +51,7 @@ export default function Eplan({ program, query, onProgramChange, onQueryChange }
         <div className="program-field">
           <span className="program-label">Programs</span>
           <div className="program-buttons" role="group" aria-label="ePlan programs">
-            {source.programs.map((p, index) => <button key={p.id} type="button" className={`program-touch${index === 0 ? ' program-touch-centered' : ''}${program === p.id ? ' is-selected' : ''}`} aria-pressed={program === p.id} onClick={() => onProgramChange(p.id)}>
+            {source.programs.map((p) => <button key={p.id} type="button" className={`program-touch${program === p.id ? ' is-selected' : ''}`} aria-pressed={program === p.id} onClick={() => onProgramChange(p.id)}>
               {displayProgramName(p.id, p.name)}<span className="program-entry-count">{resultCounts[p.id]} {query.trim() ? (resultCounts[p.id] === 1 ? 'result' : 'results') : (resultCounts[p.id] === 1 ? 'section' : 'sections')}</span>
             </button>)}
           </div>

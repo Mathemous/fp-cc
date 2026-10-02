@@ -17,16 +17,17 @@ import {
   X,
 } from 'lucide-react';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { programs, searchRecords, groupMatches, narrativeHighlights } from '@/lib/search.mjs';
+import { searchRecords, groupMatches, narrativeHighlights } from '@/lib/search.mjs';
 import records from '@/lib/records';
 import mobileDetails from '@/data/mobile-details.json';
 import { locationBlurb } from '@/lib/source-context.mjs';
 import source from '@/data/eplan-meta.json';
 import eplanSource from '@/data/eplan-source.json';
 
-import Database from './database';
 import Eplan from './eplan';
 type Item = (typeof records)[number];
+const programs = eplanSource.programs;
+const programNames = Object.fromEntries(programs.map(program => [program.id, program.name]));
 const usesPhoneLayout = () => window.matchMedia('(max-width: 900px)').matches;
 function Brand({ compact = false }: { compact?: boolean }) {
   return (
@@ -40,9 +41,11 @@ function Brand({ compact = false }: { compact?: boolean }) {
   );
 }
 const shortPrograms: Record<string, string> = {
-  'title-1-a': '1A', 'title-1-neglected': '1A Neglected',
-  'title-1-d': '1D', 'title-2-a': 'II A', 'title-4': 'IV',
+  'title-1-a': '1A',
+  'title-1-c': '1C',
+  'title-1-d': '1D',
 };
+const programShortName = (id: string) => shortPrograms[id] || programNames[id] || id;
 type MobileSource = { sourceId: string; associations: { school: string; category?: string; excerpt: string }[] };
 const detailsById = mobileDetails as Record<string, MobileSource[]>;
 const narrativesById = new Map(eplanSource.rows.map(row => [row.sourceId, row]));
@@ -82,7 +85,7 @@ function MatchCard({ item, count, query, otherProgram = false }: { item: Item; c
       <div className="match-content">
         <div className="match-card-top">
           <span className="eyebrow">{categories.length === 1 ? categories[0] : item.subcategory}</span>
-          <span className="match-program" aria-label={programs.find(p => p.id === item.program)?.name}>{shortPrograms[item.program]}</span>
+          <span className="match-program" aria-label={programNames[item.program]}>{programShortName(item.program)}</span>
         </div>
         <h3>{item.item}</h3>
         {schools.length > 0 && <p className="match-schools">{schools.slice(0, 2).join(' · ')}{schools.length > 2 ? ' + ' + (schools.length - 2) + ' more' : ''}</p>}
@@ -101,7 +104,7 @@ function MatchCard({ item, count, query, otherProgram = false }: { item: Item; c
         {sources.length > 0 && <>
           <dialog className="narrative-dialog" ref={dialogRef} aria-labelledby={titleId}>
             <div className="narrative-dialog-header">
-              <div><span className="eyebrow">{shortPrograms[item.program]} · Full narrative</span><h2 id={titleId}>{item.item}</h2></div>
+              <div><span className="eyebrow">{programShortName(item.program)} · Full narrative</span><h2 id={titleId}>{item.item}</h2></div>
               <button type="button" aria-label="Close full narrative" onClick={() => dialogRef.current?.close()} autoFocus><X size={24} /></button>
             </div>
             <div className="narrative-dialog-body">
@@ -118,9 +121,8 @@ function MatchCard({ item, count, query, otherProgram = false }: { item: Item; c
 }
 export default function Home() {
   const [entered, setEntered] = useState(() => usesPhoneLayout() && (location.hash === '#search' || location.hash === '#eplan'));
-  const [databaseOpen, setDatabaseOpen] = useState(() => location.hash === '#database');
   const [eplanOpen, setEplanOpen] = useState(() => !usesPhoneLayout() && (location.hash === '#eplan' || location.hash === '#search'));
-  const [program, setProgram] = useState('title-1-a');
+  const [program, setProgram] = useState(() => programs[0]?.id || '');
   const [word, setWord] = useState('');
   const [query, setQuery] = useState<string | null>(null);
   const [visible, setVisible] = useState(30);
@@ -135,7 +137,6 @@ export default function Home() {
     const sync = () => {
       const searchRoute = location.hash === '#search' || location.hash === '#eplan';
       setEntered(phoneLayout.matches && searchRoute);
-      setDatabaseOpen(location.hash === '#database');
       setEplanOpen(!phoneLayout.matches && searchRoute);
     };
     window.addEventListener('hashchange', sync);
@@ -192,7 +193,7 @@ export default function Home() {
     observer.observe(header);
     return () => observer.disconnect();
   }, [entered]);
-  const current = programs.find((p) => p.id === program)!;
+  const current = programs.find((p) => p.id === program) || programs[0]!;
   const matching = useMemo(
     () => (query === null ? [] : searchRecords(records, query)),
     [query],
@@ -235,7 +236,7 @@ export default function Home() {
     <form onSubmit={submit}>
       <div className="program-field">
         <span id="program-label" className="program-label">
-          Title 1 Programs
+          Title I Programs
         </span>
         <ToggleGroup
           className="program-buttons"
@@ -252,16 +253,9 @@ export default function Home() {
               type="button"
               aria-label={p.name}
               aria-describedby={`entries-${p.id}`}
-              className={`program-touch ${index === 0 ? 'program-touch-centered' : ''} ${program === p.id ? 'is-selected' : ''}`}
+              className={`program-touch ${program === p.id ? 'is-selected' : ''}`}
             >
-              {p.id === 'title-1-neglected' ? (
-                <span>
-                  Title I, Part A<br />
-                  <strong>Neglected</strong>
-                </span>
-              ) : (
-                p.name
-              )}
+              {p.name}
               <span id={`entries-${p.id}`} className="program-entry-count">
                 {programEntryCounts[p.id]}{' '}
                 {word.trim() ? (programEntryCounts[p.id] === 1 ? 'result' : 'results') : (programEntryCounts[p.id] === 1 ? 'section' : 'sections')}
@@ -316,7 +310,6 @@ export default function Home() {
     setWord(value);
     setQuery(value.trim() || null);
   }} />;
-  if (databaseOpen) return <Database />;
   if (!entered)
     return (
       <main className="welcome">
@@ -335,8 +328,8 @@ export default function Home() {
             </div>
             <h1>Find what you need.</h1>
             <p>
-              Explore materials and services
-              <br className="desktop-break" /> across five Federal Programs.
+              Explore Title I materials and services
+              <br className="desktop-break" /> from Chester County ePlan budgets.
             </p>
             <a
               className="primary-button eplan-entry-button"

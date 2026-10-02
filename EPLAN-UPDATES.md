@@ -2,7 +2,7 @@
 
 Retrieval and validation are maintained in the separate local project at C:\Projects\FP-CC App\FP-CC Updater. FP-CC contains only the published source files and application interface.
 
-The downloader selects the requested fiscal year's highest approved Consolidated revision and retrieves all five program budgets through ePlan's public interface. It records the application name, application date, revision, approval status, source-check time, and every exported budget row.
+The downloader selects the requested fiscal year's highest approved Consolidated revision and retrieves every discovered Title I budget section through ePlan's public interface. It records the application name, application date, revision, approval status, source-check time, and every exported budget row.
 
 The full source is published separately in the app's ePlan budget view. That view shows direct export fields and full narratives. It includes personnel and other rows outside the materials-and-services search.
 
@@ -21,7 +21,7 @@ Unclear text must be omitted from the proposed database and reported for review.
 
 ## Validation
 
-Downloads must include all five programs, Chester County Schools district code 120, an approved application, expected export columns, valid source keys, and unique records. Older years or revisions, incomplete downloads, duplicate IDs, blank changed narratives, and empty results are rejected.
+Downloads must include every discovered Title I budget section, Chester County Schools district code 120, an approved application, expected export columns, valid source keys, and unique records. Older years or revisions, incomplete downloads, duplicate IDs, blank changed narratives, and empty results are rejected.
 
 The materials-and-services index includes object lines 300–899 and excludes account 99100 transfers. Personnel, benefits, and indirect transfers remain available in the full ePlan source view.
 
