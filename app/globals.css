@@ -132,20 +132,20 @@ h3 {
   text-align: center;
 }
 .kcs-watermark {
-  width: 205px;
-  height: 110px;
-  object-fit: contain;
-  object-position: center;
+  width: fit-content;
+  height: auto;
   margin: 0 auto 22px;
   display: block;
 }
 .cc-watermark {
-  width: clamp(210px, 34vw, 300px);
-  height: auto;
-  aspect-ratio: 32 / 11;
+  color: #cfe4f8;
+  font-family: Arial Black, Arial, sans-serif;
+  font-size: clamp(68px, 12vw, 132px);
+  font-weight: 900;
+  letter-spacing: -0.11em;
+  line-height: 0.85;
   mix-blend-mode: screen;
-  filter: none;
-  opacity: 0.36;
+  opacity: 0.33;
 }
 .brand > span {
   font-weight: 350;

@@ -322,12 +322,9 @@ export default function Home() {
       <main className="welcome">
         <div className="welcome-glow" />
         <div className="welcome-inner">
-          <img
-            className="kcs-watermark cc-watermark"
-            src="/ccs-watermark.svg"
-            alt=""
-            aria-hidden="true"
-          />
+          <div className="kcs-watermark cc-watermark" aria-hidden="true">
+            CCS
+          </div>
           <div className="welcome-brand">
             <Brand />
             <p className="federal-label">Federal Programs</p>
