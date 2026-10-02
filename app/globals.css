@@ -140,12 +140,12 @@ h3 {
   display: block;
 }
 .cc-watermark {
-  width: clamp(150px, 24vw, 210px);
+  width: clamp(210px, 34vw, 300px);
   height: auto;
-  aspect-ratio: 1;
+  aspect-ratio: 32 / 11;
   mix-blend-mode: screen;
-  filter: grayscale(0.45) saturate(0.5) contrast(0.82) brightness(1.08);
-  opacity: 0.34;
+  filter: none;
+  opacity: 0.36;
 }
 .brand > span {
   font-weight: 350;

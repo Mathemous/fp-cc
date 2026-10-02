@@ -324,7 +324,7 @@ export default function Home() {
         <div className="welcome-inner">
           <img
             className="kcs-watermark cc-watermark"
-            src="/chester-county-schools-logo.png"
+            src="/ccs-watermark.svg"
             alt=""
             aria-hidden="true"
           />
