@@ -322,10 +322,12 @@ export default function Home() {
       <main className="welcome">
         <div className="welcome-glow" />
         <div className="welcome-inner">
-          <div className="kcs-watermark cc-watermark" aria-hidden="true">
-            FP<br />
-            <strong>CC</strong>
-          </div>
+          <img
+            className="kcs-watermark cc-watermark"
+            src="/chester-county-schools-logo.png"
+            alt=""
+            aria-hidden="true"
+          />
           <div className="welcome-brand">
             <Brand />
             <p className="federal-label">Federal Programs</p>

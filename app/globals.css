@@ -134,25 +134,18 @@ h3 {
 .kcs-watermark {
   width: 205px;
   height: 110px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
-  mix-blend-mode: screen;
-  filter: grayscale(1) invert(1);
-  opacity: 0.28;
   margin: 0 auto 22px;
   display: block;
 }
 .cc-watermark {
-  object-fit: initial;
+  width: clamp(156px, 28vw, 235px);
+  height: auto;
+  aspect-ratio: 1;
   mix-blend-mode: screen;
-  font-size: 45px;
-  font-weight: 350;
-  line-height: 0.92;
-  letter-spacing: 0;
-}
-.cc-watermark strong {
-  font-size: 52px;
-  font-weight: 800;
+  filter: drop-shadow(0 18px 36px #0004) saturate(0.85);
+  opacity: 0.92;
 }
 .brand > span {
   font-weight: 350;
